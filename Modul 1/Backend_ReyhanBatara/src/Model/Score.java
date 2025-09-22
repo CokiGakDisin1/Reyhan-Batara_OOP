@@ -1,25 +1,37 @@
 package Model;
-import java.util.UUID;
-import java.time.LocalDateTime;
 
-public class Value implements ShowDetail {
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+public class Score {
     private UUID scoreId;
     private UUID playerId;
+    private Player player;
     private int value;
     private int coinsCollected;
     private int distance;
-    private int LocalDateTime; createdAt;
+    private LocalDateTime createdAt;
 
-    public value(UUID playerId, int value,int coinsCollected,int distance) {
+    public Score(UUID playerId, int score, int coinsCollected, int distance) {
         this.scoreId = UUID.randomUUID();
         this.playerId = playerId;
-        this.value = 0;
-        this.coinsCollected = 0;
-        this.distance= 0;
+        this.value = score;
+        this.coinsCollected = coinsCollected;
+        this.distance = distance;
         this.createdAt = LocalDateTime.now();
     }
 
-    public UUID getValue() {
+    public void showDetail() {
+        System.out.println("Score ID: " + scoreId);
+        System.out.println("Player ID: " + playerId);
+        System.out.println("Score Value: " + value);
+        System.out.println("Coins Collected: " + coinsCollected);
+        System.out.println("Distance: " + distance);
+        System.out.println("Created At: " + createdAt);
+        System.out.println();
+    }
+
+    public int getValue() {
         return value;
     }
 
@@ -31,13 +43,16 @@ public class Value implements ShowDetail {
         return distance;
     }
 
-    public void showDetail() {
-        System.out.println("Score ID: " + scoreId);
-        System.out.println("Player ID: " + playerId);
-        System.out.println("Score Value: " + value);
-        System.out.println("Coins Collected: " + coinsCollected);
-        System.out.println("Distance: " + distance);
-        System.out.println("Created At: " + createdAt);
+    public Object getPlayerId() {
+        return playerId;
+    }
+
+    public UUID getScoreId() {
+        return scoreId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
 
