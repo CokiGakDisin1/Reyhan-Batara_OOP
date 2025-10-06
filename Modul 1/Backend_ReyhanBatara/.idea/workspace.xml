@@ -5,24 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1aec3bc-f24a-472c-a2d3-86c82c4aef6c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend_ReyhanBatara.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Score.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ShowDetail.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/BaseRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PlayerRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ScoreRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Score.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/PlayerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ScoreService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ShowDetail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

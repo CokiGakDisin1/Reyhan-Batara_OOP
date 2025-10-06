@@ -1,16 +1,18 @@
 package com.reyhan.backend.Repository;
 
-import Model.Score;
+import com.reyhan.backend.model.Score;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ScoreRepository extends BaseRepository<Score, UUID> {
+public class Scorerepository extends BaseRepository<Score, UUID> {
 
     @Override
     public void save(Score score) {
         UUID id = getId(score);
         dataMap.put(id, score);
-        allData.add(score);
+        if (!allData.contains(score)) {
+            allData.add(score);
+        }
     }
 
     @Override
@@ -31,6 +33,18 @@ public class ScoreRepository extends BaseRepository<Score, UUID> {
                 .collect(Collectors.toList());
     }
 
+    public List<Score> findByValueGreaterThan(int minValue) {
+        return allData.stream()
+                .filter(score -> score.getValue() > minValue)
+                .collect(Collectors.toList());
+    }
+
+    public List<Score> findAllByOrderByCreatedAtDesc() {
+        return allData.stream()
+                .sorted((s1, s2) -> s2.getCreatedAt().compareTo(s1.getCreatedAt()))
+                .collect(Collectors.toList());
+    }
+
     public List<Score> findTopScores(int limit) {
         return allData.stream()
                 .sorted((s1, s2) -> Integer.compare(s2.getValue(), s1.getValue()))
@@ -44,29 +58,17 @@ public class ScoreRepository extends BaseRepository<Score, UUID> {
                 .max((s1, s2) -> Integer.compare(s1.getValue(), s2.getValue()));
     }
 
-    public List<Score> findByValueGreaterThan(Integer minValue) {
-        return allData.stream()
-                .filter(score -> score.getValue() > minValue)
-                .collect(Collectors.toList());
-    }
-
-    public List<Score> findAllByOrderByCreatedAtDesc() {
-        return allData.stream()
-                .sorted((s1, s2) -> s2.getCreatedAt().compareTo(s1.getCreatedAt()))
-                .collect(Collectors.toList());
-    }
-
-    public Integer getTotalCoinsByPlayerId(UUID playerId) {
+    public int getTotalCoinsByPlayerId(UUID playerId) {
         return allData.stream()
                 .filter(score -> score.getPlayerId().equals(playerId))
                 .mapToInt(Score::getCoinsCollected)
                 .sum();
     }
 
-    public Integer getTotalDistanceByPlayerId(UUID playerId) {
+    public int getTotalDistanceByPlayerId(UUID playerId) {
         return allData.stream()
                 .filter(score -> score.getPlayerId().equals(playerId))
-                .mapToInt(Score::getDistance)
+                .mapToInt(Score::getDistanceTravelled)
                 .sum();
     }
 }

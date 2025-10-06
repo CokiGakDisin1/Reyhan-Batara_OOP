@@ -1,56 +1,29 @@
 package com.reyhan.backend.Repository;
 
-import Model.Player;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.reyhan.backend.model.Player;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-public class PlayerRepository extends BaseRepository<Player, UUID> {
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-    @Override
-    public void save(Player player) {
-        UUID id = getId(player);
-        dataMap.put(id, player);
-        allData.add(player);
-    }
+@Repository
+public interface PlayerRepository extends JpaRepository<Player, UUID> {
 
-    @Override
-    public UUID getId(Player entity) {
-        return entity.getPlayerId();
-    }
 
-    public Optional<Player> findByUsername(String username) {
-        return allData.stream()
-                .filter(player -> player.getUsername().equals(username))
-                .findFirst();
-    }
+    Optional<Player> findByUsername(String username);
+    boolean existsByUsername(String username);
 
-    public List<Player> findTopPlayersByHighScore(int limit) {
-        return allData.stream()
-                .sorted((p1, p2) -> Integer.compare(p2.getHighScore(), p1.getHighScore()))
-                .limit(limit)
-                .collect(Collectors.toList());
-    }
+    // UNTUK QUERY, LANGSUNG KASIH AJA, MEREKA BELUM BELAJAR!!
+    @Query("SELECT p FROM Player p ORDER BY p.highScore DESC")
+    List<Player> findTopPlayersByHighScore(@Param("limit") int limit);
 
-    public List<Player> findByHighscoreGreaterThan(int minScore) {
-        return allData.stream()
-                .filter(player -> player.getHighScore() > minScore)
-                .collect(Collectors.toList());
-    }
+    List<Player> findByHighScoreGreaterThan(Integer minScore);
+    List<Player> findAllByOrderByTotalCoinsDesc();
 
-    public boolean existByUsername(String username) {
-        return allData.stream()
-                .anyMatch(player -> player.getUsername().equals(username));
-    }
 
-    public List<Player> findAllByOrderByTotalCoinsDesc() {
-        return allData.stream()
-                .sorted((p1, p2) -> Integer.compare(p2.getTotalCoins(), p1.getTotalCoins()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Player> findAllByOrderByTotalDistanceTravelledDesc() {
-        return allData.stream()
-                .sorted((p1, p2) -> Integer.compare(p2.getTotalDistance(), p1.getTotalDistance()))
-                .collect(Collectors.toList());
-    }
+    List<Player> findAllByOrderByTotalDistanceTravelledDesc();
 }

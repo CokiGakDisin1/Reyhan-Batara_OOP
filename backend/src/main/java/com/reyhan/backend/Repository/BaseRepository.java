@@ -33,4 +33,3 @@ public abstract class BaseRepository<T, ID> {
     public abstract void save(T entity);
     public abstract ID getId(T entity);
 }
-

@@ -1,40 +1,37 @@
 package com.reyhan.backend.Service;
 
-import Model.Score;
-import Repository.ScoreRepository;
-import Repository.PlayerRepository;
-
+import com.reyhan.backend.Repository.Scorerepository;
+import com.reyhan.backend.Repository.PlayerRepository;
+import com.reyhan.backend.Repository.Scorerepository;
+import com.reyhan.backend.model.Score;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public class ScoreService {
 
-    private ScoreRepository scoreRepository;
+    private Scorerepository scoreRepository;
     private PlayerRepository playerRepository;
     private PlayerService playerService;
 
-    public ScoreService(ScoreRepository scoreRepository, PlayerRepository playerRepository, PlayerService playerService) {
+    public ScoreService(Scorerepository scoreRepository, PlayerRepository playerRepository, PlayerService playerService) {
         this.scoreRepository = scoreRepository;
         this.playerRepository = playerRepository;
         this.playerService = playerService;
     }
 
     public Score createScore(Score score) {
-        // Verify player exists
         if (!playerRepository.findById(score.getPlayerId()).isPresent()) {
             throw new RuntimeException("Player not found with ID: " + score.getPlayerId());
         }
 
-        // Save the score
         scoreRepository.save(score);
 
-        // Update player statistics
         playerService.updatePlayerStats(
-                score.getPlayerId(), // Tidak perlu cast ke UUID
+                score.getPlayerId(),
                 score.getValue(),
                 score.getCoinsCollected(),
-                score.getDistance()
+                score.getDistanceTravelled()
         );
 
         return score;
@@ -61,7 +58,7 @@ public class ScoreService {
     }
 
     public Optional<Score> getHighestScoreByPlayerId(UUID playerId) {
-        return scoreRepository.findHighestScoreByPlayerId(playerId);
+
     }
 
     public List<Score> getScoresAboveValue(int minValue) {
@@ -101,4 +98,5 @@ public class ScoreService {
             scoreRepository.delete(score);
         }
     }
+
 }
