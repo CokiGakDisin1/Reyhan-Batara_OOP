@@ -30,15 +30,12 @@ public class Player {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    // Default constructor
     public Player() {}
 
-    // Constructor with username
     public Player(String username) {
         this.username = username;
     }
 
-    // Getters and Setters
     public UUID getPlayerId() {
         return playerId;
     }
@@ -87,7 +84,6 @@ public class Player {
         this.createdAt = createdAt;
     }
 
-    // Business methods
     public void updateHighScore(Integer newScore) {
         if (newScore > this.highScore) {
             this.highScore = newScore;

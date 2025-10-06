@@ -1,7 +1,12 @@
 package com.reyhan.backend;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication(scanBasePackages = "com.reyhan.backend")
 public class BackendApplication {
     public static void main(String[] args) {
-        System.out.println("Backend running (manual repository mode)");
+        SpringApplication.run(BackendApplication.class, args);
     }
 }
+

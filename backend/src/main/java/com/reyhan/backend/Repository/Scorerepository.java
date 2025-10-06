@@ -1,74 +1,36 @@
 package com.reyhan.backend.Repository;
 
 import com.reyhan.backend.model.Score;
-import java.util.*;
-import java.util.stream.Collectors;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-public class Scorerepository extends BaseRepository<Score, UUID> {
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-    @Override
-    public void save(Score score) {
-        UUID id = getId(score);
-        dataMap.put(id, score);
-        if (!allData.contains(score)) {
-            allData.add(score);
-        }
-    }
+@Repository
+public interface ScoreRepository extends JpaRepository<Score,UUID> {
 
-    @Override
-    public UUID getId(Score entity) {
-        return entity.getScoreId();
-    }
+    List<Score> findByPlayerId(UUID playerId);
 
-    public List<Score> findByPlayerId(UUID playerId) {
-        return allData.stream()
-                .filter(score -> score.getPlayerId().equals(playerId))
-                .collect(Collectors.toList());
-    }
+    List<Score> findByPlayerIdOrderByValueDesc(UUID PlayerId);
 
-    public List<Score> findByPlayerIdOrderByValueDesc(UUID playerId) {
-        return allData.stream()
-                .filter(score -> score.getPlayerId().equals(playerId))
-                .sorted((s1, s2) -> Integer.compare(s2.getValue(), s1.getValue()))
-                .collect(Collectors.toList());
-    }
+    @Query("SELECT s FROM score s ORDER BY s.value DESC")
+    List<Score> findTopScores(@Param("limit") int limit);
 
-    public List<Score> findByValueGreaterThan(int minValue) {
-        return allData.stream()
-                .filter(score -> score.getValue() > minValue)
-                .collect(Collectors.toList());
-    }
+    @Query("SELECT s FROM Score s WHERE s.playerId = :playerId ORDER BY s.value DESC")
+    List<Score> findHighestScoreByPlayerId(@Param("playerId") UUID playerId);
 
-    public List<Score> findAllByOrderByCreatedAtDesc() {
-        return allData.stream()
-                .sorted((s1, s2) -> s2.getCreatedAt().compareTo(s1.getCreatedAt()))
-                .collect(Collectors.toList());
-    }
+    List<Score> findByValueGreaterThan(Integer minValue);
 
-    public List<Score> findTopScores(int limit) {
-        return allData.stream()
-                .sorted((s1, s2) -> Integer.compare(s2.getValue(), s1.getValue()))
-                .limit(limit)
-                .collect(Collectors.toList());
-    }
+    List<Score> findAllByOrderByCreatedAtDesc();
 
-    public Optional<Score> findHighestScoreByPlayerId(UUID playerId) {
-        return allData.stream()
-                .filter(score -> score.getPlayerId().equals(playerId))
-                .max((s1, s2) -> Integer.compare(s1.getValue(), s2.getValue()));
-    }
+    @Query("SELECT SUM(s.coinsCollected) FROM Score s WHERE s.playerId = :playerId")
+    Integer getTotalCoinsByPlayerId(@Param("playerId") UUID playerId);
 
-    public int getTotalCoinsByPlayerId(UUID playerId) {
-        return allData.stream()
-                .filter(score -> score.getPlayerId().equals(playerId))
-                .mapToInt(Score::getCoinsCollected)
-                .sum();
-    }
+    @Query("SELECT SUM(s.distanceTravelled) FROM Score s WHERE s.playerId = :playerId")
+    Integer getTotalDistanceByPlayerId(@Param("playerId") UUID playerId);
 
-    public int getTotalDistanceByPlayerId(UUID playerId) {
-        return allData.stream()
-                .filter(score -> score.getPlayerId().equals(playerId))
-                .mapToInt(Score::getDistanceTravelled)
-                .sum();
-    }
 }

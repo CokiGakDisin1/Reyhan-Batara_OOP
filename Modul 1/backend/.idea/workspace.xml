@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="db37af4f-f7d8-47a0-a305-104be73afb99" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/BackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/BackendApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Controller/HealthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Controller/HealthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Controller/ScoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Controller/ScoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Repository/BaseRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Repository/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Repository/PlayerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Repository/Scorerepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Repository/Scorerepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Service/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Service/PlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Service/ScoreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/Service/ScoreService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/model/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/reyhan/backend/model/Score.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="33KxPzVzS9FiyIqGPsHCjDPLUyZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BackendApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Reyhan Batara/OneDrive/문서/ReyhanBatara_OOP/Modul 1/backend",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="db37af4f-f7d8-47a0-a305-104be73afb99" name="Changes" comment="" />
+      <created>1759079544941</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759079544941</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/reyhan/backend/Service/ScoreService.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

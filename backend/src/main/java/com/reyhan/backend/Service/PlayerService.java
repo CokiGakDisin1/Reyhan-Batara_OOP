@@ -36,7 +36,7 @@ public class PlayerService {
 
     public Player updatePlayer(UUID playerId, Player updatedPlayer) {
         Player existingPlayer = playerRepository.findById(playerId)
-                .orElseThrow(() -> new RuntimeException("Player not found with ID: " + playerId));
+                .orElseThrow(() -> new RuntimeException("Tidak ditemukan player dengan ID: " + playerId));
 
         if (updatedPlayer.getUsername() != null) {
             if (!existingPlayer.getUsername().equals(updatedPlayer.getUsername())
@@ -68,18 +68,22 @@ public class PlayerService {
         playerRepository.deleteById(playerId);
     }
 
-
     public void deletePlayerByUsername(String username) {
-        Player player = playerRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Player not found with username: " + username));
-        playerRepository.delete(player);
+        Optional<Player> playerOpt = playerRepository.findByUsername(username);
+        if (playerOpt.isEmpty()) {
+            throw new RuntimeException("Tidak ditemukan player dengan username: " + username);
+        }
+        playerRepository.delete(playerOpt.get());
     }
 
     public Player updatePlayerStats(UUID playerId, Integer scoreValue, Integer coinsCollected, Integer distanceTravelled) {
         Player player = playerRepository.findById(playerId)
-                .orElseThrow(() -> new RuntimeException("Player not found with ID: " + playerId));
+                .orElseThrow(() -> new RuntimeException("Tidak ditemukan player dengan ID: " + playerId));
 
+        // Update high score if this score is higher
         player.updateHighScore(scoreValue);
+
+        // Add coins and distance to totals
         player.addCoins(coinsCollected);
         player.addDistance(distanceTravelled);
 
