@@ -3,67 +3,70 @@ package com.Reyhan.frontend;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
+
     private ShapeRenderer shapeRenderer;
-    private float x, y;
-    private float width = 50;
-    private float height = 50;
-    private Color color;
+    private Player player;
+    private Ground ground;
+    private GameManager gameManager;
+
+    private OrthographicCamera camera;
+    private float cameraOffset = 0.2f;
 
     @Override
     public void create() {
         shapeRenderer = new ShapeRenderer();
-        x = Gdx.graphics.getWidth() / 2f - width / 2f;
-        y = Gdx.graphics.getHeight() / 2f - height / 2f;
-        color = Color.RED;
+        gameManager = GameManager.getInstance();
+
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false);
+
+        player = new Player(new Vector2(100, Gdx.graphics.getHeight() / 2f));
+        ground = new Ground();
+        gameManager.startGame();
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        float delta = Gdx.graphics.getDeltaTime();
 
-        float speed = 200 * Gdx.graphics.getDeltaTime();
+        update(delta);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            y += speed;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            y -= speed;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            x -= speed;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            x += speed;
-        }
+        ScreenUtils.clear(0.1f, 0.1f, 0.2f, 1f);
 
-        if (x < 0) x = 0;
-        if (x + width > Gdx.graphics.getWidth()) x = Gdx.graphics.getWidth() - width;
-        if (y < 0) y = 0;
-        if (y + height > Gdx.graphics.getHeight()) y = Gdx.graphics.getHeight() - height;
-
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            if (color == Color.RED) {
-                color = Color.YELLOW;
-                System.out.println("Warna berubah menjadi KUNING");
-            } else if (color == Color.YELLOW) {
-                color = Color.BLUE;
-                System.out.println("Warna berubah menjadi BIRU");
-            } else if (color == Color.BLUE) {
-                color = Color.RED;
-                System.out.println("Warna berubah menjadi MERAH");
-            }
-        }
+        shapeRenderer.setProjectionMatrix(camera.combined);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(color);
-        shapeRenderer.rect(x, y, width, height);
+        ground.renderShape(shapeRenderer);
+        player.renderShape(shapeRenderer);
         shapeRenderer.end();
+    }
+
+    private void update(float delta) {
+        boolean isFlying = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+
+        player.update(delta, isFlying);
+        updateCamera(delta);
+        ground.update(camera.position.x);
+
+        float ceilingY = camera.position.y + camera.viewportHeight / 2f;
+        player.checkBoundaries(ground, ceilingY);
+
+        int currentDistance = (int) player.getDistanceTraveled();
+        if (currentDistance > gameManager.getScore()) {
+            gameManager.setScore(currentDistance);
+        }
+    }
+
+    private void updateCamera(float delta) {
+        float cameraFocusX = player.getPosition().x + (Gdx.graphics.getWidth() * cameraOffset);
+        camera.position.x = cameraFocusX;
+        camera.update();
     }
 
     @Override

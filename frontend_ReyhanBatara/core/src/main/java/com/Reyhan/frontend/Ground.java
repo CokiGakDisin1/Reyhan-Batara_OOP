@@ -1,24 +1,33 @@
 package com.Reyhan.frontend;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
-import java.awt.*;
+public class Ground {
 
-public class Ground extends ApplicationAdapter {
     private static final float GROUND_HEIGHT = 50f;
     private Rectangle collider;
 
-    public Ground(Rectangle collider) {
-        this.collider = new Rectangle(0,0,2*Gdx.graphics.getWidth(),GROUND_HEIGHT);
+    public Ground() {
+        this.collider = new Rectangle(0, 0, Gdx.graphics.getWidth() * 2, GROUND_HEIGHT);
     }
 
     public void update(float cameraX) {
-        float groundWidth = Gdx.graphics.getWidth();
-        this.collider.set
+        collider.setPosition(cameraX - Gdx.graphics.getWidth() / 2f - 500, 0);
+        collider.setWidth(Gdx.graphics.getWidth() * 2);
+    }
+
+    public boolean isColliding(Rectangle playerCollider) {
+        return collider.overlaps(playerCollider);
+    }
+
+    public float getTopY() {
+        return GROUND_HEIGHT;
+    }
+
+    public void renderShape(ShapeRenderer shapeRenderer) {
+        shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1f);
+        shapeRenderer.rect(collider.x, collider.y, collider.width, collider.height);
     }
 }
