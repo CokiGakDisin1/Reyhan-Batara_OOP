@@ -1,7 +1,6 @@
 package com.Reyhan.frontend;
 
 public class GameManager {
-
     private static GameManager instance;
 
     private int score;
@@ -27,11 +26,11 @@ public class GameManager {
 
     public void setScore(int newScore) {
         if (gameActive) {
-            this.score = newScore;
+            score = newScore;
         }
     }
 
-    public int getScore() {
-        return score;
-    }
+    // Getters
+    public int getScore() { return score; }
 }
+
