@@ -1,6 +1,7 @@
 package com.Reyhan.frontend;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color; // Import Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -26,10 +27,8 @@ public class Ground {
         return GROUND_HEIGHT;
     }
 
-    // Debug
-    public void renderShape(ShapeRenderer shapeRenderer) {
-        // Draw ground as gray rectangle
-        shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1f); // Gray color
+    public void render(ShapeRenderer shapeRenderer) {
+        shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.rect(collider.x, collider.y, collider.width, collider.height);
     }
 }
