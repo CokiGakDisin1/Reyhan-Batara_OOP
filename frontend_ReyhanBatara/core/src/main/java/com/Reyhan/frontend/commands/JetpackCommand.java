@@ -2,7 +2,7 @@ package com.Reyhan.frontend.commands;
 
 import com.Reyhan.frontend.Player;
 
-public class JetpackCommand implements Command{
+public class JetpackCommand implements Command {
     private Player player;
 
     public JetpackCommand(Player player) {
@@ -11,7 +11,8 @@ public class JetpackCommand implements Command{
 
     @Override
     public void execute() {
-        if (!player.isDead())
-        player.fly();
+        if (player != null && !player.isDead()) {
+            player.fly();
+        }
     }
 }
