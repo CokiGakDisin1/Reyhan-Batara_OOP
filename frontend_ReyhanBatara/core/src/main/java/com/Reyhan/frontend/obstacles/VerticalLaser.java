@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class VerticalLaser extends BaseObstacle {
-
     public VerticalLaser(Vector2 startPosition, int length) {
         super(startPosition, length);
     }
@@ -26,12 +25,7 @@ public class VerticalLaser extends BaseObstacle {
     }
 
     @Override
-    public float getRenderWidth() {
+    protected float getRenderWidth() {
         return WIDTH;
-    }
-
-    @Override
-    public float getRenderHeight() {
-        return length;
     }
 }

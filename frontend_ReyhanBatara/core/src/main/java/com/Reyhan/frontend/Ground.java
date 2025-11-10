@@ -27,8 +27,10 @@ public class Ground {
         return GROUND_HEIGHT;
     }
 
-    public void render(ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(Color.WHITE);
+    // Debug
+    public void renderShape(ShapeRenderer shapeRenderer) {
+        // Draw ground as gray rectangle
+        shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1f); // Gray color
         shapeRenderer.rect(collider.x, collider.y, collider.width, collider.height);
     }
 }
