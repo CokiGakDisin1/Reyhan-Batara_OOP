@@ -7,7 +7,7 @@ public class GameStateManager {
     private final Stack<GameState> states;
 
     public GameStateManager() {
-        states = new Stack<>();
+        this.states = new Stack<>();
     }
 
     public void push(GameState state) {
@@ -15,19 +15,26 @@ public class GameStateManager {
     }
 
     public void pop() {
-        states.pop().dispose();
+        if(!states.isEmpty()){
+            GameState s = states.pop();
+            s.dispose();
+        }
     }
 
     public void set(GameState state) {
-        pop();
-        push(state);
+        states.pop();
+        states.push(state);
     }
 
     public void update(float delta) {
-        states.peek().update(delta);
+        if(!states.isEmpty()){
+            states.peek().update(delta);
+        }
     }
 
     public void render(SpriteBatch batch) {
-        states.peek().render(batch);
+        if(!states.isEmpty()){
+            states.peek().render(batch);
+        }
     }
 }

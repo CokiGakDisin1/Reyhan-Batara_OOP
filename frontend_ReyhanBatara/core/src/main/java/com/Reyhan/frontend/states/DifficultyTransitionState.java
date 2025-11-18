@@ -1,8 +1,5 @@
 package com.Reyhan.frontend.states;
 
-import com.Reyhan.frontend.states.GameState;
-import com.Reyhan.frontend.states.GameStateManager;
-import com.Reyhan.frontend.states.PlayingState;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.Reyhan.frontend.strategies.DifficultyStrategy;
@@ -32,13 +29,12 @@ public class DifficultyTransitionState implements GameState {
 
     @Override
     public void render(SpriteBatch batch) {
-        playingState.render(batch);
         batch.begin();
         float w = com.badlogic.gdx.Gdx.graphics.getWidth();
         float h = com.badlogic.gdx.Gdx.graphics.getHeight();
-        font.draw(batch, "DIFFICULTY INCREASED!", w / 2f - 80, h / 2f + 20);
-        font.draw(batch, newStrategy.getClass().getSimpleName(), w / 2f - 60, h / 2f - 10);
-        batch.end();
+        String DI = "DIFFICULTY INCREASED!" + newStrategy.getClass().getSimpleName();
+        font.draw(batch, DI, w / 2f - 80, h / 2f + 20);
+
     }
 
     @Override

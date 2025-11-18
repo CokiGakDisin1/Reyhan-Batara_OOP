@@ -137,9 +137,9 @@ public class PlayingState implements GameState {
     private void updateDifficulty(int score) {
         if (score > 1000 && !(difficultyStrategy instanceof HardDifficultyStrategy)) {
             if (score > 2000) {
-                gsm.push(new DifficultyTransitionState(gsm, this, new HardDifficultyStrategy()));
+                gsm.set(new DifficultyTransitionState(gsm, this, new HardDifficultyStrategy()));
             } else if (!(difficultyStrategy instanceof MediumDifficultyStrategy)) {
-                gsm.push(new DifficultyTransitionState(gsm, this, new MediumDifficultyStrategy()));
+                gsm.set(new DifficultyTransitionState(gsm, this, new MediumDifficultyStrategy()));
             }
         }
     }
@@ -151,11 +151,13 @@ public class PlayingState implements GameState {
             spriteBatch = new SpriteBatch();
         }
 
-
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
+
+
         background.render(spriteBatch);
         spriteBatch.end();
+
 
 
         shapeRenderer.setProjectionMatrix(camera.combined);

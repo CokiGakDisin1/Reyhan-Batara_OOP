@@ -10,8 +10,8 @@ public class MediumDifficultyStrategy implements DifficultyStrategy {
     }
 
     @Override
-    public int getDensity() {
-        return 2;
+    public float getDensity() {
+        return 2f;
     }
 
     @Override
@@ -22,9 +22,9 @@ public class MediumDifficultyStrategy implements DifficultyStrategy {
     @Override
     public Map<String, Integer> getObstacleWeights() {
         Map<String, Integer> map = new HashMap<>();
-        map.put("VerticalLaser", 2);
-        map.put("HorizontalLaser", 2);
-        map.put("HomingMissile", 1);
+        map.put("VerticalLaser", 4);
+        map.put("HorizontalLaser", 4);
+        map.put("HomingMissile", 2);
         return map;
     }
 }

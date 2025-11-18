@@ -41,7 +41,9 @@ public class Background {
 
         // Draw background tiles to cover entire screen and beyond
         for (float x = startX - scaledWidth; x < currentCameraX + screenWidth + scaledWidth; x += scaledWidth) {
+
             batch.draw(backgroundRegion, x, 0, scaledWidth, scaledHeight);
+
         }
     }
 
