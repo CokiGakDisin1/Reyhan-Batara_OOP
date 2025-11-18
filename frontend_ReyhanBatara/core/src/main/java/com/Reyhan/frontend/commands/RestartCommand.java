@@ -18,4 +18,3 @@ public class RestartCommand implements Command {
         gameManager.setScore(0);
     }
 }
-

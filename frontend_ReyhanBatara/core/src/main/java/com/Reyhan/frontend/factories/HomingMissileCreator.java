@@ -5,11 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.Reyhan.frontend.obstacles.BaseObstacle;
 import com.Reyhan.frontend.obstacles.HomingMissile;
 import com.Reyhan.frontend.pools.HomingMissilePool;
-
 import java.util.List;
 import java.util.Random;
 
-class HomingMissileCreator implements ObstacleFactory.ObstacleCreator {
+public class HomingMissileCreator implements ObstacleFactory.ObstacleCreator {
     private final HomingMissilePool pool = new HomingMissilePool();
 
     @Override
@@ -35,3 +34,4 @@ class HomingMissileCreator implements ObstacleFactory.ObstacleCreator {
     @Override
     public String getName() { return "HomingMissile"; }
 }
+

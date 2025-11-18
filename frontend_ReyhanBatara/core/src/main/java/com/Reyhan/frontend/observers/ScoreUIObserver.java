@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+
 public class ScoreUIObserver implements Observer {
     private BitmapFont font;
     private SpriteBatch batch;
@@ -17,12 +18,14 @@ public class ScoreUIObserver implements Observer {
 
     @Override
     public void update(int score) {
-        System.out.println("Score has been updated: " + score);
+        // In a real implementation, we would render the score to the screen
+        // For now, we'll just print to console to demonstrate the observer pattern
+        Gdx.app.log("ScoreUI", "Score updated: " + score);
     }
 
     public void render(int score) {
         batch.begin();
-        font.draw(batch, "Score: " + score, 20, Gdx.graphics.getHeight() - 20);
+        font.draw(batch, "Score: " + score, 10, Gdx.graphics.getHeight() - 20);
         batch.end();
     }
 

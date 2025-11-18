@@ -5,11 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.Reyhan.frontend.obstacles.BaseObstacle;
 import com.Reyhan.frontend.obstacles.VerticalLaser;
 import com.Reyhan.frontend.pools.VerticalLaserPool;
-
 import java.util.List;
 import java.util.Random;
 
-class VerticalLaserCreator implements ObstacleFactory.ObstacleCreator {
+public class VerticalLaserCreator implements ObstacleFactory.ObstacleCreator {
     private static final float MIN_HEIGHT = 100f;
     private static final float MAX_HEIGHT = 300f;
 
@@ -44,3 +43,4 @@ class VerticalLaserCreator implements ObstacleFactory.ObstacleCreator {
     @Override
     public String getName() { return "VerticalLaser"; }
 }
+

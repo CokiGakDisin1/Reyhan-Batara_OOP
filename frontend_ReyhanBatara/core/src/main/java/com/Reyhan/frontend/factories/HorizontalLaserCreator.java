@@ -5,11 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.Reyhan.frontend.obstacles.BaseObstacle;
 import com.Reyhan.frontend.obstacles.HorizontalLaser;
 import com.Reyhan.frontend.pools.HorizontalLaserPool;
-
 import java.util.List;
 import java.util.Random;
 
-class HorizontalLaserCreator implements ObstacleFactory.ObstacleCreator {
+public class HorizontalLaserCreator implements ObstacleFactory.ObstacleCreator {
     private static final float MIN_LENGTH = 100f;
     private static final float MAX_LENGTH = 300f;
 
@@ -44,3 +43,4 @@ class HorizontalLaserCreator implements ObstacleFactory.ObstacleCreator {
     @Override
     public String getName() { return "HorizontalLaser"; }
 }
+

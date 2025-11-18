@@ -1,16 +1,15 @@
 package com.Reyhan.frontend;
-
-import com.Reyhan.frontend.observers.Observer;
 import com.Reyhan.frontend.observers.ScoreManager;
 
 public class GameManager {
     private static GameManager instance;
+
     private ScoreManager scoreManager;
-    private boolean gameStarted;
+    private boolean gameActive;
 
     private GameManager() {
-        this.scoreManager = new ScoreManager();
-        this.gameStarted = false;
+        scoreManager = new ScoreManager();
+        gameActive = false;
     }
 
     public static GameManager getInstance() {
@@ -20,29 +19,27 @@ public class GameManager {
         return instance;
     }
 
-    public void setScore(int newScore) {
-        this.scoreManager.setScore(newScore);
-    }
-
-    public int getScore() {
-        return this.scoreManager.getScore();
-    }
-
-    public void addObserver(Observer observer) {
-        this.scoreManager.addObserver(observer);
-    }
-
-    public void removeObserver(Observer observer) {
-        this.scoreManager.removeObserver(observer);
-    }
-
     public void startGame() {
-        this.gameStarted = true;
-        setScore(0);
+        scoreManager.setScore(0);
+        gameActive = true;
+        System.out.println("Game Started!");
     }
 
-    public boolean isGameStarted() {
-        return gameStarted;
+    public void setScore(int newScore) {
+        if (gameActive) {
+            scoreManager.setScore(newScore);
+        }
+    }
+
+    // Getters
+    public int getScore() { return scoreManager.getScore(); }
+
+    // Delegate observer methods to ScoreManager
+    public void addObserver(com.Reyhan.frontend.observers.Observer observer) {
+        scoreManager.addObserver(observer);
+    }
+
+    public void removeObserver(com.Reyhan.frontend.observers.Observer observer) {
+        scoreManager.removeObserver(observer);
     }
 }
-

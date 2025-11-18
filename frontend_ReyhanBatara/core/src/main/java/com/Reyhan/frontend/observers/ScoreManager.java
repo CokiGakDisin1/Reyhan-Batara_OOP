@@ -3,6 +3,9 @@ package com.Reyhan.frontend.observers;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ScoreManager that implements Subject interface for Observer Pattern
+ */
 public class ScoreManager implements Subject {
     private List<Observer> observers;
     private int score;
@@ -30,15 +33,13 @@ public class ScoreManager implements Subject {
     }
 
     public void setScore(int newScore) {
-        if (this.score != newScore) {
+        if (newScore != this.score) {
             this.score = newScore;
             notifyObservers(this.score);
         }
     }
 
     public int getScore() {
-        return this.score;
+        return score;
     }
 }
-
-

@@ -24,4 +24,3 @@ public class HorizontalLaserPool extends ObjectPool<HorizontalLaser> {
         return obstacle;
     }
 }
-
