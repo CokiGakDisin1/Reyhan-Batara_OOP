@@ -6,25 +6,26 @@ import java.util.Map;
 public class HardDifficultyStrategy implements DifficultyStrategy {
     @Override
     public float getSpawnInterval() {
-        return 1.0f;
+        return 2.0f;
     }
 
     @Override
-    public float getDensity() {
-        return 3f;
+    public int getDensity() {
+        return 2;
     }
 
     @Override
     public float getMinGap() {
-        return 200f;
+        return 150f;
     }
 
     @Override
     public Map<String, Integer> getObstacleWeights() {
-        Map<String, Integer> map = new HashMap<>();
-        map.put("VerticalLaser", 4);
-        map.put("HorizontalLaser", 4);
-        map.put("HomingMissile", 3);
-        return map;
+        Map<String, Integer> weights = new HashMap<>();
+        // Vertical: 30%, Horizontal: 30%, Homing Missile: 40%
+        weights.put("VerticalLaser", 3);
+        weights.put("HorizontalLaser", 3);
+        weights.put("HomingMissile", 4);
+        return weights;
     }
 }

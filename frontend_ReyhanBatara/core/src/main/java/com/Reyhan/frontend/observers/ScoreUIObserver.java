@@ -34,3 +34,4 @@ public class ScoreUIObserver implements Observer {
         batch.dispose();
     }
 }
+

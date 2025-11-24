@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 
 public class GameOverState implements GameState {
+
     private final GameStateManager gsm;
     private final BitmapFont font;
 
@@ -23,12 +25,10 @@ public class GameOverState implements GameState {
 
     @Override
     public void render(SpriteBatch batch) {
-
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-        font.draw(batch, "GAME OVER", w / 2f - 50, h / 2f + 20);
-        font.draw(batch, "Press SPACE to restart", w / 2f - 100, h / 2f - 20);
-
+        batch.begin();
+        font.draw(batch, "GAME OVER", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 1.5f, 0, Align.center, false);
+        font.draw(batch, "Press SPACE to restart", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, 0, Align.center, false);
+        batch.end();
     }
 
     @Override
