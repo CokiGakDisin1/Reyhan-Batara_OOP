@@ -8,11 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.Reyhan.frontend.Background;
-import com.Reyhan.frontend.Coin;
-import com.Reyhan.frontend.GameManager;
-import com.Reyhan.frontend.Ground;
-import com.Reyhan.frontend.Player;
+import com.badlogic.gdx.utils.Array;
+import com.Reyhan.frontend.*;
 import com.Reyhan.frontend.commands.Command;
 import com.Reyhan.frontend.commands.JetpackCommand;
 import com.Reyhan.frontend.factories.CoinFactory;
@@ -20,6 +17,11 @@ import com.Reyhan.frontend.factories.ObstacleFactory;
 import com.Reyhan.frontend.observers.ScoreUIObserver;
 import com.Reyhan.frontend.obstacles.BaseObstacle;
 import com.Reyhan.frontend.obstacles.HomingMissile;
+import com.Reyhan.frontend.strategies.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import com.Reyhan.frontend.strategies.DifficultyStrategy;
 import com.Reyhan.frontend.strategies.EasyDifficultyStrategy;
 import com.Reyhan.frontend.strategies.HardDifficultyStrategy;
@@ -29,16 +31,17 @@ public class PlayingState implements GameState {
     private final GameStateManager gsm;
     private final ShapeRenderer shapeRenderer;
     private SpriteBatch spriteBatch;
-
     private final Player player;
     private final Ground ground;
     private final Background background;
     private final Command jetpackCommand;
     private final ScoreUIObserver scoreUIObserver;
     private final ObstacleFactory obstacleFactory;
-
     private final CoinFactory coinFactory;
+
     private float coinSpawnTimer = 0f;
+    private final List<CoinPattern> coinPatterns;
+    private final Random random;
 
     private float obstacleSpawnTimer;
     private float lastObstacleSpawnX = 0f;
@@ -59,6 +62,12 @@ public class PlayingState implements GameState {
         this.shapeRenderer = new ShapeRenderer();
         this.screenWidth = Gdx.graphics.getWidth();
         this.screenHeight = Gdx.graphics.getHeight();
+        this.random = new Random();
+
+        this.coinFactory = new CoinFactory();
+        this.coinPatterns = new ArrayList<>();
+        this.coinPatterns.add(new LinePattern());
+        this.coinPatterns.add(new RectanglePattern());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, screenWidth, screenHeight);
@@ -73,8 +82,6 @@ public class PlayingState implements GameState {
         GameManager.getInstance().addObserver(scoreUIObserver);
 
         obstacleFactory = new ObstacleFactory();
-        coinFactory = new CoinFactory();
-
         setDifficulty(new EasyDifficultyStrategy());
 
         obstacleSpawnTimer = 0f;
@@ -115,38 +122,10 @@ public class PlayingState implements GameState {
         GameManager.getInstance().setScore(currentScoreMeters);
 
         if (currentScoreMeters > lastLoggedScore) {
-            System.out.println("Distance: " + currentScoreMeters + "m");
             lastLoggedScore = currentScoreMeters;
         }
 
         updateDifficulty(currentScoreMeters);
-    }
-
-    private void updateCoins(float delta) {
-        coinSpawnTimer += delta;
-        if (coinSpawnTimer > 0.5f) {
-            float spawnX = camera.position.x + screenWidth;
-            coinFactory.createCoinPattern(spawnX, ground.getTopY());
-            coinSpawnTimer = 0;
-        }
-
-        float cameraLeft = camera.position.x - screenWidth / 2f;
-        for (Coin coin : coinFactory.getActiveCoins()) {
-            coin.update(delta);
-            if (coin.getPosition().x + 15f < cameraLeft) {
-                coinFactory.releaseCoin(coin);
-            }
-        }
-    }
-
-    private void checkCoinCollisions() {
-        Rectangle playerCollider = player.getCollider();
-        for (Coin coin : coinFactory.getActiveCoins()) {
-            if (coin.isColliding(playerCollider)) {
-                coin.setActive(false);
-                GameManager.getInstance().addCoin();
-            }
-        }
     }
 
     private void updateDifficulty(int score) {
@@ -168,20 +147,29 @@ public class PlayingState implements GameState {
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         background.render(spriteBatch);
+
+        player.render(spriteBatch);
+
+        for (BaseObstacle obstacle : obstacleFactory.getAllInUseObstacles()) {
+            obstacle.render(spriteBatch);
+        }
+
         spriteBatch.end();
 
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        player.renderShape(shapeRenderer);
 
         shapeRenderer.setColor(Color.RED);
         for (BaseObstacle obstacle : obstacleFactory.getAllInUseObstacles()) {
-            obstacle.render(shapeRenderer);
+            if (!(obstacle instanceof HomingMissile)) {
+                obstacle.render(shapeRenderer);
+            }
         }
 
         for (Coin coin : coinFactory.getActiveCoins()) {
             coin.renderShape(shapeRenderer);
         }
+
         shapeRenderer.end();
 
         scoreUIObserver.render(GameManager.getInstance().getScore(), GameManager.getInstance().getCoins());
@@ -228,12 +216,57 @@ public class PlayingState implements GameState {
         }
     }
 
+    private void updateCoins(float delta) {
+        coinSpawnTimer += delta;
+        float spawnInterval = 2f + random.nextFloat() * 2f;
+
+        if (coinSpawnTimer >= spawnInterval) {
+            spawnCoins();
+            coinSpawnTimer = 0f;
+        }
+
+        float cameraLeft = camera.position.x - screenWidth / 2f;
+
+        // PERBAIKAN UTAMA: Menggunakan copy array manual, bukan snapshot()
+        Array<Coin> activeCoins = new Array<>(coinFactory.getActiveCoins());
+
+        for (Coin coin : activeCoins) {
+            coin.update(delta);
+            if (coin.getPosition().x + 15f < cameraLeft) {
+                coinFactory.releaseCoin(coin);
+            }
+        }
+    }
+
+    private void spawnCoins() {
+        float cameraRightEdge = camera.position.x + screenWidth / 2f;
+        float spawnX = cameraRightEdge + 100f;
+
+        if (!coinPatterns.isEmpty()) {
+            CoinPattern pattern = coinPatterns.get(random.nextInt(coinPatterns.size()));
+            List<Coin> newCoins = pattern.spawn(coinFactory, ground.getTopY(), spawnX, screenHeight);
+            for(Coin c : newCoins) {
+                coinFactory.getActiveCoins().add(c);
+            }
+        }
+    }
+
     private void checkCollisions() {
         Rectangle playerCollider = player.getCollider();
         for (BaseObstacle obstacle : obstacleFactory.getAllInUseObstacles()) {
             if (obstacle.isColliding(playerCollider)) {
                 player.die();
                 return;
+            }
+        }
+    }
+
+    private void checkCoinCollisions() {
+        Rectangle playerCollider = player.getCollider();
+        for (Coin coin : coinFactory.getActiveCoins()) {
+            if (coin.isColliding(playerCollider)) {
+                coin.setActive(false);
+                GameManager.getInstance().addCoin();
             }
         }
     }
